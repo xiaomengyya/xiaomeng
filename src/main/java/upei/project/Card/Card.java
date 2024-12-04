@@ -5,6 +5,7 @@ public class Card {
     private final int number;
     private boolean isTaken = false;
     private Person owner = null;
+    private Person target = null;
     public Card(int number) {
         this.number = number;
     }
@@ -25,5 +26,8 @@ public class Card {
     }
     public boolean isNotTaken() {
         return !this.isTaken;
+    }
+    public void setTarget(Person target) {
+        this.target = target;
     }
 }
