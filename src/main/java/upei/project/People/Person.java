@@ -1,30 +1,55 @@
 package upei.project.People;
+import upei.project.Card.EquipCard.EquipCard;
 import upei.project.Controller.IO;
 import upei.project.Card.Card;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import upei.project.Card.EquipCard.Weapon.Weapon;
+import upei.project.Card.EquipCard.Armor.Armor;
 
 public class Person {
     private final String name;
     private int maxHP;
     private int curHP;
+    private Weapon weapon= null;
+    private Armor armor = null;
+    private ArrayList<Card> handCards = new ArrayList<>();
 
+    public int getCurHP() { return this.curHP; }
+    public int getMaxHP() { return maxHP; }
+    public void setCurHP(int HP) { this.curHP = HP; }
+    public void recover(int num){
+        if(getCurHP() == getMaxHP()){
+            return;
+        }
+        setCurHP(Math.min(getCurHP() + num, getMaxHP()));
+    }
+
+    public void setWeapon(Weapon weapon) {
+        this.weapon = weapon;
+    }
+    public Weapon getWeapon() {
+        return weapon;
+    }
+    public void setArmor(Armor armor) {
+        this.armor = armor;
+    }
+    public Armor getArmor() {
+        return armor;
+    }
+
+    public boolean hasHandCard(Card card){
+        return this.handCards != null;
+    }
+
+
+
+    private boolean hasUsedSkill1 = false;
+    private final ArrayList<Card> cards = new ArrayList<>();
     private boolean myRound = false;
     private int maxShaCount = 1;
     private int shaCount = maxShaCount;
-    private boolean hasUsedSkill1 = false;
-
-    //private ArrayList<Card> curCards;
-    private final ArrayList<Card> cards = new ArrayList<>();
-    private final HashMap<EquipType, Equipment> equipments = new HashMap<>();
-
-
-//    public Person(String name, int maxHP, int curHP) {
-//        this.name = name;
-//        this.curHP = curHP;
-//        this.maxHP = maxHP;
-//    }
 
     public Person(String name, int maxHP){
         this.name = name;
@@ -41,15 +66,15 @@ public class Person {
         this.curHP = Math.max(curHP, maxHP);
     }
 
-    public int getMaxHP() { return maxHP; }
+
 
     public void setShaCount(int shaCount) { this.shaCount = shaCount; }
 
     public int getShaCount() { return shaCount; }
 
-    public void setCurrentHP(int currentHP) { this.curHP = currentHP; }
 
-    public int getHP() { return curHP; }
+
+
 
     public int getMaxShaCount() { return maxShaCount; }
 
@@ -58,6 +83,7 @@ public class Person {
     public ArrayList<Card> getCards() {
         return cards;
     }
+
 
     public HashMap<EquipType, Equipment> getEquipments() {
         return equipments;
@@ -109,4 +135,6 @@ public class Person {
     public void drawCards(int num) {
         drawCards(num, true);
     }
+
+
 }

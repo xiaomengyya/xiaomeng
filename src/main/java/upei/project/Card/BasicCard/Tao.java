@@ -1,15 +1,16 @@
 package upei.project.Card.BasicCard;
 
-public class Flash extends BasicCard {
-    public Flash(int number) {
+public class Tao extends BasicCard {
+    public Tao(int number) {
         super(number);
     }
 
     public Object use() {
+        getTarget().recover(1);
         return true;
     }
 
     public String toString() {
-        return "Flash";
+        return "Tao";
     }
 }
