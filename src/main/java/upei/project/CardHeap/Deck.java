@@ -1,7 +1,7 @@
 package upei.project.CardHeap;
 import upei.project.Card.Card;
 import upei.project.Card.BasicCard.*;
-import upei.project.Card.StratCard.*;
+import upei.project.Card.TacticCard.*;
 
 import java.util.ArrayList;
 import java.util.Collections;
