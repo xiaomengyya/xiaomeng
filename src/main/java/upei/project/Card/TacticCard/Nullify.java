@@ -1,4 +1,4 @@
-package upei.project.Card.StratCard;
+package upei.project.Card.TacticCard;
 
 import upei.project.Controller.GameController;
 import upei.project.People.Person;
