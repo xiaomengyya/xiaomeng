@@ -27,7 +27,7 @@ public class GameController {
 
     }
 
-    private void initializeGame() {
+    public void initializeGame() {
 
         System.out.println("Initializing the game...");
         //Creat Player
@@ -178,9 +178,38 @@ public class GameController {
     }
 
     // 获取对手
-    private Person getOpponent(Person player) {
+    public Person getOpponent(Person player) {
         return player == p1 ? p2 : p1;
     }
+
+    //Get current player
+    public Person getCurrentPlayer() {
+        return round % 2 == 1 ? p1 : p2; // Odd rounds are p1, even rounds are p2
+    }
+    public int getRound() {
+        return round;
+    }
+    public Person getP1() {
+        return p1;
+    }
+
+    public Person getP2() {
+        return p2;
+    }
+    public Deck getDeck() {
+        return this.deck;
+    }
+
+    public void nextTurn() {
+        round++;
+        System.out.println("\n--- Next Turn ---");
+        if (round % 2 == 1) {
+            System.out.println("It's " + p1.getName() + "'s turn.");
+        } else {
+            System.out.println("It's " + p2.getName() + "'s turn.");
+        }
+    }
+
 
     // 弃置卡牌
     public void discardCard(Card card) {
@@ -188,8 +217,46 @@ public class GameController {
         System.out.println("Card " + card.getName() + " is discarded to the discard pile!");
     }
 
-    public Deck getDeck() {
-        return this.deck;
+
+
+    public void runGame() {
+        System.out.println("Starting the game...");
+
+        // 游戏主要逻辑
+        while (p1.getHP() > 0 && p2.getHP() > 0) {
+            System.out.println("\n--- Round " + round + " ---");
+
+            // Player 1's turn
+            startTurn(p1);
+            if (p2.getHP() <= 0) {
+                System.out.println(p2.getName() + " has been defeated!");
+                break;
+            }
+
+            // Player 2's turn
+            startTurn(p2);
+            if (p1.getHP() <= 0) {
+                System.out.println(p1.getName() + " has been defeated!");
+                break;
+            }
+
+            round++; // Increment round counter
+        }
+
+
+
+        // 游戏结束
+        System.out.println("\nGame Over!");
+        if (p1.getHP() > 0) {
+            System.out.println(p1.getName() + " is the winner!");
+        } else if (p2.getHP() > 0) {
+            System.out.println(p2.getName() + " is the winner!");
+        }
     }
+
+
+
+
+
 
 }
