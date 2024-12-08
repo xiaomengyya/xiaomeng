@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 [![Review Assignment Due Date](https://classroom.github.com/assets/deadline-readme-button-22041afd0340ce965d47ae6ef1cefeee28c7c493a6346c4f15d667ab976d596c.svg)](https://classroom.github.com/a/lSSXQhBk)
 # 2024F CS2910 Programming Project Specification
 
@@ -207,3 +208,6 @@ the course.
 
 
 
+=======
+# xiaomeng
+>>>>>>> 444f727e0e9fd6235edda8aded5fb1a7d22e04b3
