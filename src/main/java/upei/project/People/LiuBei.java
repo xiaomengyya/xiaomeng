@@ -17,14 +17,14 @@ public class LiuBei extends Legend {
             for (int j = i + 1; j < handCards.size(); j++) {
                 if ((handCards.get(i).getNumber() + handCards.get(j).getNumber()) % 2 == 1) {
                     Card card1 = handCards.remove(i);
-                    Card card2 = handCards.remove(j - 1); // 因为移除第一张后索引会变化
+                    Card card2 = handCards.remove(j - 1); // Because the index will change after removing the first one
                     opponent.drawCard(card1);
                     opponent.drawCard(card2);
-                    System.out.println(self.getName() + " 使用仁德技能，将手牌 " + card1.getNumber() + " 和 " + card2.getNumber() + " 交给了 " + opponent.getName());
+                    System.out.println(self.getName() + "uses the Ren De skill to" + card1.getNumber() + " and " + card2.getNumber() + " handed over " + opponent.getName());
                     return;
                 }
             }
         }
-        System.out.println(self.getName() + " 没有满足条件的手牌！");
+        System.out.println(self.getName() + "There are no matching hands!");
     }
 }

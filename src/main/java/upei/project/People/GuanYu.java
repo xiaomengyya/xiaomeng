@@ -17,13 +17,13 @@ public class GuanYu extends Legend {
         boolean foundEvenCard = false;
 
         for (Card card : handCards) {
-            if (card.getNumber() % 2 == 0) { // 判断偶数手牌
-                System.out.println(self.getName() + " uses the Wusheng skill to " + card.getName() + " (number：" + card.getNumber() + ") 当作“杀”使用！");
+            if (card.getNumber() % 2 == 0) { // Check for even hands
+                System.out.println(self.getName() + " uses the Wusheng skill to " + card.getName() + " (number：" + card.getNumber() + ") use as \"kill\"!");
                 Kill kill = new Kill(card.getNumber());
-                game.playCard(kill, self, opponent); // 执行攻击逻辑
-                self.getHandCards().remove(card); // 从手牌中移除该卡
+                game.playCard(kill, self, opponent); // Execute attack logic
+                self.getHandCards().remove(card); // Remove the card from your hand
                 foundEvenCard = true;
-                break; // 技能只使用一次
+                break; //Skill can only be used once
             }
         }
 

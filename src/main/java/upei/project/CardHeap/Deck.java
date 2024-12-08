@@ -1,6 +1,8 @@
 package upei.project.CardHeap;
 import upei.project.Card.Card;
 import upei.project.Card.BasicCard.*;
+import upei.project.Card.EquipCard.Armor.*;
+import upei.project.Card.EquipCard.Weapon.*;
 import upei.project.Card.TacticCard.*;
 
 import java.util.ArrayList;
@@ -18,14 +20,11 @@ public class Deck {
     }
 
     private void initializeDeck() {
-        int maxNumber = 9; // 牌面数字0-9
+        int maxNumber = 9; // Card numbers 0-9
 
         // Add Basic Card
         for (int i = 0; i <= maxNumber; i++) {
-//            cards.add(new Kill("Basic", "Kill", "Deal 1 damage to the target", i));//杀
-//            cards.add(new Flash("Basic", "Flash", "Negative one kill", i));//闪
-//            cards.add(new Jiu("Basic", "Wine", "Restore 1 HP or increase damage", i));//酒
-//            cards.add(new Tao("Basic","Escape", "Avoid all attacks", i));//逃
+
             cards.add(new Kill(i));//Sha
             cards.add(new Flash(i));//Shan
             cards.add(new Jiu(i));//Jiu
@@ -34,15 +33,15 @@ public class Deck {
 
         // Add Equipment Card
         for (int i = 0; i <= maxNumber; i++) {
-//            if (i < 3) {
+//
 //                cards.add(new Card("Equip", "八卦阵", "50%几率闪避杀", i));
-//                cards.add(new Card("Equip", "仁王盾", "无效的杀", i));
+            cards.add(new RenWangShield(i));
 //                cards.add(new Card("Equip", "杀无效", "完全免疫杀", i));
-//            } else {
-//                cards.add(new Card("Equip", "青龙偃月刀", "每次使用杀可以多选一个目标", i));
+//
+            cards.add(new GreenDragonCrescentBlade(i));
 //                cards.add(new Card("Equip", "丈八蛇矛", "可将两张牌当作杀",  i));
 //                cards.add(new Card("Equip", "雌雄双股剑", "命中对手时可以弃置对方一张牌",  i));
-//            }
+//
         }
 
         // Add Tactic Card
@@ -55,7 +54,6 @@ public class Deck {
             cards.add(new Harvest(i));
         }
     }
-
     private void shuffleDeck() {
         Collections.shuffle(cards);
     }

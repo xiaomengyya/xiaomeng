@@ -11,56 +11,56 @@ import java.util.Scanner;
 
 public class DestroyBridge extends TacticCard {
     public DestroyBridge(int num) {
-        super("过河拆桥", "技能发动时，使对方弃置一张牌（装备或手牌）", num);
+        super("DestroyBridge", "When the skill is activated, the opponent discards a card (equipment or hand)", num);
     }
 
     @Override
     public void activateEffect(Person self, Person opponent, GameController game) {
-        System.out.println(self.getName() + " 使用了过河拆桥，目标是 " + opponent.getName());
+        System.out.println(self.getName() + " used the bridge-breaking method, the target is " + opponent.getName());
 
         Scanner scanner = new Scanner(System.in);
 
         // 检查对方是否有牌可以弃置
         if (opponent.getHandCards().isEmpty() && opponent.getWeapon() == null && opponent.getArmor() == null) {
-            System.out.println(opponent.getName() + " 没有任何牌，过河拆桥无效！");
+            System.out.println(opponent.getName() +"There is no card, crossing the river and destroying the bridge is useless!");
             return;
         }
 
-        System.out.println("请选择对方要弃置的牌类型：1-手牌，2-武器，3-防具：");
+        System.out.println("Please select the type of card that the opponent wants to discard: 1-Hand Card, 2-Weapon, 3-Armor:");
         int choice = scanner.nextInt();
 
         switch (choice) {
-            case 1: // 弃置手牌
+            case 1: // Discard hand card
                 if (!opponent.getHandCards().isEmpty()) {
-                    Card discardedCard = opponent.getHandCards().remove(0); // 直接弃置第一张手牌
+                    Card discardedCard = opponent.getHandCards().remove(0); // Discard the first card in hand directly
                     game.getDeck().discardCard(discardedCard);
-                    System.out.println(opponent.getName() + " 弃置了手牌：" + discardedCard.getName());
+                    System.out.println(opponent.getName() + " discards hand card：" + discardedCard.getName());
                 } else {
-                    System.out.println(opponent.getName() + " 没有手牌，选择无效！");
+                    System.out.println(opponent.getName() + "No cards in hand, the selection is invalid!");
                 }
                 break;
-            case 2: // 弃置武器
+            case 2: // Discard weapon
                 if (opponent.getWeapon() != null) {
                     Card weapon = opponent.getWeapon();
                     opponent.unequipWeapon();
                     game.getDeck().discardCard(weapon);
-                    System.out.println(opponent.getName() + " 弃置了武器：" + weapon.getName());
+                    System.out.println(opponent.getName() + " discards weapon：" + weapon.getName());
                 } else {
-                    System.out.println(opponent.getName() + " 没有武器，选择无效！");
+                    System.out.println(opponent.getName() + " Without weapons, the choice is invalid!");
                 }
                 break;
-            case 3: // 弃置防具
+            case 3: // Discard armor
                 if (opponent.getArmor() != null) {
                     Card armor = opponent.getArmor();
                     opponent.unequipArmor();
                     game.getDeck().discardCard(armor);
-                    System.out.println(opponent.getName() + " 弃置了防具：" + armor.getName());
+                    System.out.println(opponent.getName() + " discards armor：" + armor.getName());
                 } else {
-                    System.out.println(opponent.getName() + " 没有防具，选择无效！");
+                    System.out.println(opponent.getName() + " Without armors, the choice is invalid!");
                 }
                 break;
             default:
-                System.out.println("无效选择！");
+                System.out.println("Invalid selection!");
         }
     }
 }

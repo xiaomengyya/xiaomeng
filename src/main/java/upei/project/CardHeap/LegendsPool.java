@@ -27,9 +27,9 @@ public class LegendsPool {
     public Legend assignRandomLegend() {
         if (!legends.isEmpty()) {
             Collections.shuffle(legends);
-            return legends.remove(0); // 分配并移除已分配的 Legend
+            return legends.remove(0); // Allocate and remove allocated Legend
         }
-        return null; // 如果没有 Legend 可分配
+        return null; // If there is no Legend to allocate
     }
 
 }

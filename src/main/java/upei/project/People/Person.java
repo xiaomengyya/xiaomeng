@@ -21,7 +21,7 @@ public class Person {
     private ArrayList<Card> handCards;
 
     private boolean hasUsedKill;
-    private boolean extraKillAllowed; // 是否允许额外使用“杀”
+    private boolean extraKillAllowed; // Is it allowed to use "kill" additionally?
 
     private int maxShaCount = 1;
     private int shaCount = maxShaCount;
@@ -36,7 +36,7 @@ public class Person {
         this.armor = null;
         this.legend = null;
         this.hasUsedKill = false;
-        this.extraKillAllowed = false; // 初始状态下不允许额外使用“杀”
+        this.extraKillAllowed = false; // Additional use of "kill" is not allowed in the initial state
     }
 
     // reset round
@@ -49,70 +49,54 @@ public class Person {
         handCards.add(card);
     }
 
-    // 出牌
-//    public boolean useCard(Card card, Person opponent, GameController game) {
-//        if (card.getName().equals("Kill")) {
-//            if (hasUsedKill) {
-//                System.out.println(name + "\"Kill\" has been used in this round and cannot be used again!");
-//                return false;
-//            }
-//            hasUsedKill = true;
-//        }
-//        handCards.remove(card);
-//        game.playCard(card, this, opponent);
-//        return true;
-//    }
-
-
     //Has Card
     public boolean hasCard(String cardName) {
         return handCards.stream().anyMatch(c -> c.getName().equals(cardName));
     }
 
-
-
+    //Assign legend randomly
     public void assignLegend(Legend legend) {
         this.legend = legend;
-        System.out.println(name + " 分配的 Legend 是: " + legend);
+        System.out.println("The Legend assigned to + " + name + " is: " + legend);
     }
 
     // Equip Armor / Weapon(Play can only equip one armor and one weapon)
     public void equip(EquipCard equipCard) {
         if (equipCard instanceof Weapon) {
             if (weapon != null) {
-                System.out.println(name + " 当前已经装备了武器：" + weapon.getName());
-                System.out.println("是否卸下当前武器并装备新的？输入 0 表示是，输入 1 表示否：");
+                System.out.println(name + "currently equipped weapons:" + weapon.getName());
+                System.out.println("Do you want to remove the current weapon and equip a new one? Enter 0 for yes, 1 for no:");
                 Scanner scanner = new Scanner(System.in);
                 int choice = scanner.nextInt();
                 if (choice == 0) {
                     handCards.add(weapon);
-                    System.out.println(name + " 卸下了武器：" + weapon.getName());
+                    System.out.println(name + " unequipped weapon：" + weapon.getName());
                     weapon = (Weapon) equipCard;
-                    System.out.println(name + " 装备了武器：" + equipCard.getName());
+                    System.out.println(name + " equipped weapon：" + equipCard.getName());
                 } else {
-                    System.out.println(name + " 保留了当前武器，未装备新武器！");
+                    System.out.println(name + " retained the current weapon and no new weapons is equipped!");
                 }
             } else {
                 weapon = (Weapon) equipCard;
-                System.out.println(name + " 装备了武器：" + equipCard.getName());
+                System.out.println(name + " equipped weapon：" + equipCard.getName());
             }
         } else if (equipCard instanceof Armor) {
             if (armor != null) {
-                System.out.println(name + " 当前已经装备了防具：" + armor.getName());
-                System.out.println("是否卸下当前防具并装备新的？输入 0 表示是，输入 1 表示否：");
+                System.out.println(name + " currently equip armor：：" + armor.getName());
+                System.out.println("Do you want to remove the current armor and equip new one? Enter 0 for yes, 1 for no:");
                 Scanner scanner = new Scanner(System.in);
                 int choice = scanner.nextInt();
                 if (choice == 0) {
                     handCards.add(armor);
-                    System.out.println(name + " 卸下了防具：" + armor.getName());
+                    System.out.println(name + " unequipped armor：" + armor.getName());
                     armor = (Armor) equipCard;
-                    System.out.println(name + " 装备了防具：" + equipCard.getName());
+                    System.out.println(name + " equipped armor：" + equipCard.getName());
                 } else {
-                    System.out.println(name + " 保留了当前防具，未装备新防具！");
+                    System.out.println(name + " retained the current armor and no new armor is equipped!");
                 }
             } else {
                 armor = (Armor) equipCard;
-                System.out.println(name + " 装备了防具：" + equipCard.getName());
+                System.out.println(name + " equipped weapon：" + equipCard.getName());
             }
         }
     }
@@ -120,39 +104,39 @@ public class Person {
     //Unequip Weapon
     public void unequipWeapon() {
         if (weapon != null) {
-            System.out.println(name + " 卸下了武器：" + weapon.getName());
+            System.out.println(name + " unequipped weapon：" + weapon.getName());
             weapon = null;
         } else {
-            System.out.println(name + " 没有武器可卸下！");
+            System.out.println(name + " No weapons to unload!");
         }
     }
     //Unequip Armor
     public void unequipArmor() {
         if (armor != null) {
-            System.out.println(name + " 卸下了防具：" + armor.getName());
+            System.out.println(name + " unequipped armor：" + armor.getName());
             armor = null;
         } else {
-            System.out.println(name + " 没有防具可卸下！");
+            System.out.println(name + ": No armor to remove!");
         }
     }
 
 
     // Take damage
     public void takeDamage(int damage) {
-        if (armor != null && armor.getName().equals("仁王盾")) {
-            System.out.println(name + " 的仁王盾触发，免疫此次伤害！");
+        if (armor != null && armor.getName().equals("RenWangSheild")) {
+            System.out.println(name + " triggers the RenWang Shield effect, immune to normal kills!");
             return;
         }
         curHP -= damage;
-        System.out.println(name + " 受到 " + damage + " 点伤害，剩余血量：" + curHP);
+        System.out.println(name + " get " + damage + " damage，current HP is：" + curHP);
         if (curHP <= 0) {
-            System.out.println(name + " 已经阵亡！");
+            System.out.println(name + " died in battle");
         }
     }
 
     public void allowExtraKill() {
         extraKillAllowed = true;
-        System.out.println(name + " 的青龙偃月刀效果触发：本回合可以额外使用一次“杀”！");
+        System.out.println(name + " Green Dragon Crescent Blade effect is triggered and can be used again to kill!\"");
     }
     public boolean canUseKill() {
         return !hasUsedKill || extraKillAllowed;
@@ -162,7 +146,7 @@ public class Person {
     // recover
     public void heal(int amount) {
         curHP = Math.min(maxHP, curHP + amount);
-        System.out.println(name + " 恢复了 " + amount + " 点血量，当前血量：" + curHP);
+        System.out.println(name + " recover " + amount + " HP, current HP is" + curHP);
     }
 
 
@@ -206,8 +190,6 @@ public class Person {
     }
 
 
-//    public void setMaxShaCount(int maxShaCount) { this.maxShaCount = maxShaCount; }
-//    public void setShaCount(int shaCount) { this.shaCount = shaCount; }
 
 
 }

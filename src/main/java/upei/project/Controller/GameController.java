@@ -1,6 +1,7 @@
 package upei.project.Controller;
 import upei.project.Card.Card;
 import upei.project.Card.EquipCard.EquipCard;
+import upei.project.Card.TacticCard.TacticCard;
 import upei.project.CardHeap.Deck;
 import upei.project.CardHeap.LegendsPool;
 import upei.project.People.Legend;
@@ -17,12 +18,12 @@ public class GameController {
     private Person p2;
     private Deck deck;
     private LegendsPool legendsPool;
-    private Person unlimitedKillPlayer; // 当前允许无限次使用“杀”的玩家
+    private Person unlimitedKillPlayer; // Players who are currently allowed to use "Kill" unlimited times
 
     public GameController() {
         deck = new Deck();
         legendsPool = new LegendsPool();
-        unlimitedKillPlayer = null; // 初始化为空
+        unlimitedKillPlayer = null;
         initializeGame();
 
     }
@@ -38,15 +39,22 @@ public class GameController {
         p1.assignLegend(legendsPool.assignRandomLegend());
         p2.assignLegend(legendsPool.assignRandomLegend());
 
+        System.out.println("Player 1 Legend: " + p1.getLegend().getName());
+        System.out.println("Player 2 Legend: " + p2.getLegend().getName());
+
         // Draw 5 cards at the beginning
         for (int i = 0; i < 5; i++) {
             p1.drawCard(deck.drawCard());
             p2.drawCard(deck.drawCard());
         }
-        System.out.println("Game initialization completed!");
+        IO.println("Player 1 Hand Cards: " );
+        IO.printHandCards(p1.getHandCards());
+        IO.println("Player 2 Hand Cards: "  );
+        IO.printHandCards(p2.getHandCards());
+        IO.println("Game initialization completed!");
     }
 
-    // 玩家回合逻辑
+    // Player turn logic
     public void startTurn(Person player) {
         System.out.println(player.getName() + "'s turn begins");
         player.resetTurn();
@@ -68,7 +76,7 @@ public class GameController {
         System.out.println(player.getName() + "'s turn ends");
     }
 
-    // 使用 Legend 技能阶段
+    // Use Legend Skill Phase
     private void useLegendSkill(Person player, Person opponent) {
         Legend legend = player.getLegend();
         if (legend == null) {
@@ -88,10 +96,11 @@ public class GameController {
         }
     }
 
-    // 弃牌阶段（如果手牌数量超过当前血量）
+    //Discard phase (if the number of cards in hand exceeds the current health)
     private void discardPhase(Person player) {
         while (player.getHandCards().size() > player.getHP()) {
-            System.out.println(player.getName() + "'s hand cards:" + player.getHandCards());
+            IO.println(player.getName() + "'s hand cards:");
+            IO.printHandCards(player.getHandCards());
             System.out.println("The number of cards in your hand exceeds your current HP. Please choose a card to discard (enter index):");
             Scanner scanner = new Scanner(System.in);
             int index = scanner.nextInt();
@@ -107,10 +116,12 @@ public class GameController {
     }
 
     private void playPhase(Person player, Person opponent) {
+        GameController gc = new GameController();
         Scanner scanner = new Scanner(System.in);
 
         while (true) {
-            System.out.println(player.getName() + "'s hand card:'：" + player.getHandCards());
+            System.out.println(player.getName() + "'s hand card:'：");
+            IO.printHandCards(player.getHandCards());
             System.out.println("Please enter the index of the card to be played (enter -1 to end playing):");
             int index = scanner.nextInt();
 
@@ -132,9 +143,11 @@ public class GameController {
                         System.out.println("\"Kill\" has been used in this round and cannot be used again!");
                     }
                 } else if (card instanceof EquipCard) {
-                    // 装备卡牌逻辑
                     player.equip((EquipCard) card);
                     player.getHandCards().remove(card);
+                    IO.println("Equip" + card.getName() + "successfully!");
+                } else if(card instanceof TacticCard){
+                    card.activateEffect(player, opponent, gc);
                 } else {
                     System.out.println("This card cannot be used, please choose again!");
                 }
@@ -160,7 +173,7 @@ public class GameController {
         return !player.hasUsedKill(); // Otherwise check if "kill" has been used
     }
 
-    // 重置无限“杀”状态
+    // Reset infinite "kill" status
     public void resetUnlimitedKills() {
         unlimitedKillPlayer = null;
     }
@@ -211,7 +224,7 @@ public class GameController {
     }
 
 
-    // 弃置卡牌
+    // Discard Card
     public void discardCard(Card card) {
         deck.discardCard(card);
         System.out.println("Card " + card.getName() + " is discarded to the discard pile!");
@@ -239,11 +252,8 @@ public class GameController {
                 System.out.println(p1.getName() + " has been defeated!");
                 break;
             }
-
             round++; // Increment round counter
         }
-
-
 
         // 游戏结束
         System.out.println("\nGame Over!");
@@ -253,10 +263,6 @@ public class GameController {
             System.out.println(p2.getName() + " is the winner!");
         }
     }
-
-
-
-
 
 
 }
