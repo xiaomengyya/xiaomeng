@@ -9,13 +9,11 @@ public abstract class Card {
     private String name;
     private Person owner = null;
     private Person target = null;
-
     public Card(String name, String description, int number) {
         this.name = name;
         this.info = description;
         this.number = number;
     }
-
     /*Getter*/
     public int getNumber() {
         return this.number;
@@ -26,13 +24,8 @@ public abstract class Card {
     public String getDescription() {
         return this.info;
     }
-
-
-
     // Abstract method, card effects need to be implemented by subclasses
     public abstract void activateEffect(Person self, Person opponent, GameController game);
-
-
     public void setOwner(Person player) {
         this.owner = player;
     }

@@ -7,18 +7,11 @@ public class Tao extends BasicCard {
     public Tao(int number) {
         super("Tao", "Avoid all attacks", number);
     }
-
-//    public Object use() {
-//        getTarget().recover(1);
-//        return true;
-//    }
-
     public String toString() {
         return "Tao";
     }
-
     @Override
     public void activateEffect(Person self, Person opponent, GameController game) {
-
+        self.heal(1);
     }
 }
