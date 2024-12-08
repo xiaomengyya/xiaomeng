@@ -1,8 +1,9 @@
 package upei.project.Card.EquipCard.Armor;
 import upei.project.Card.EquipCard.EquipCard;
 
-public class Armor extends EquipCard {
-    public Armor(int number) {
-        super(number, "Armor");
+public abstract class Armor extends EquipCard {
+    public Armor(String name, String description, int number) {
+        super(name, description, number);
     }
+
 }
